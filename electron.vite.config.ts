@@ -7,6 +7,10 @@ export default defineConfig({
     plugins: [externalizeDepsPlugin()],
     build: {
       rollupOptions: {
+        input: {
+          index: resolve(__dirname, 'src/main/index.ts'),
+          'usb-worker': resolve(__dirname, 'src/main/usb-worker.ts')
+        },
         external: ['better-sqlite3']
       }
     }
