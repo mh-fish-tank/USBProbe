@@ -1,3 +1,4 @@
+console.log('[Preload] Script starting...')
 import { contextBridge, ipcRenderer } from 'electron'
 import type { USBProbeAPI, USBDevice, USBEvent, UdevRule, VendorInfo } from '../shared/types'
 
@@ -85,9 +86,16 @@ const usbProbe: USBProbeAPI = {
   }
 }
 
-contextBridge.exposeInMainWorld('usbProbe', usbProbe)
+console.log('[Preload] About to expose usbProbe via contextBridge')
+try {
+  contextBridge.exposeInMainWorld('usbProbe', usbProbe)
+  console.log('[Preload] usbProbe exposed successfully')
+} catch (e) {
+  console.error('[Preload] Failed to expose usbProbe:', e)
+}
 
 // Expose event listener for device list updates and errors
+try {
 contextBridge.exposeInMainWorld('usbProbeEvents', {
   onDeviceList(callback: (devices: USBDevice[]) => void): () => void {
     const listener = (_event: Electron.IpcRendererEvent, data: USBDevice[]) => callback(data)
@@ -101,3 +109,7 @@ contextBridge.exposeInMainWorld('usbProbeEvents', {
     return () => ipcRenderer.removeListener('usb:error', listener)
   }
 })
+console.log('[Preload] usbProbeEvents exposed successfully')
+} catch (e) {
+  console.error('[Preload] Failed to expose usbProbeEvents:', e)
+}
