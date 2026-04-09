@@ -29,9 +29,14 @@ export function useDeviceListSync(): void {
   const addEvent = useDeviceStore((s) => s.addEvent)
 
   useEffect(() => {
+    if (!window.usbProbe || !window.usbProbeEvents) {
+      console.warn('USBProbe API not available — preload script may not have loaded')
+      return
+    }
+
     // Initial load
-    api.listDevices().then(setDevices)
-    api.getEvents(50).then(setEvents)
+    api.listDevices().then(setDevices).catch(console.error)
+    api.getEvents(50).then(setEvents).catch(console.error)
 
     // Subscribe to push updates: full device-list snapshots from the worker
     const unsubDeviceList = window.usbProbeEvents.onDeviceList((devices) => {

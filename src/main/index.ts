@@ -18,7 +18,7 @@ function createWindow(): void {
     frame: false,
     titleBarStyle: 'hidden',
     webPreferences: {
-      preload: join(__dirname, '../preload/index.js'),
+      preload: join(__dirname, '../preload/index.mjs'),
       sandbox: false
     }
   })
@@ -36,13 +36,29 @@ function createWindow(): void {
 }
 
 app.whenReady().then(() => {
-  initDatabase()
-  loadUsbIds()
+  try {
+    initDatabase()
+  } catch (e) {
+    console.error('Failed to initialize database:', e)
+  }
+
+  try {
+    loadUsbIds()
+  } catch (e) {
+    console.error('Failed to load USB IDs:', e)
+  }
+
   createWindow()
+
   if (mainWindow) {
     setupIPC(mainWindow)
   }
-  startWorker()
+
+  try {
+    startWorker()
+  } catch (e) {
+    console.error('Failed to start USB worker:', e)
+  }
 })
 
 app.on('window-all-closed', () => {
