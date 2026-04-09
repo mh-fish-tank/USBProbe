@@ -10,6 +10,10 @@ use napi::bindgen_prelude::*;
 use device::{enumerate_devices, read_device, NativeUSBDevice};
 use std::path::PathBuf;
 
+pub use descriptor::parse_descriptor;
+pub use monitor::*;
+pub use usb_ids::*;
+
 #[napi]
 pub fn list_devices() -> Vec<NativeUSBDevice> {
     enumerate_devices()
