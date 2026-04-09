@@ -8,6 +8,14 @@ const usbProbe: USBProbeAPI = {
     return ipcRenderer.invoke('usb:list-devices')
   },
 
+  async refreshDevices(): Promise<void> {
+    return ipcRenderer.invoke('usb:refresh-devices')
+  },
+
+  async getKnownDevices(): Promise<any[]> {
+    return ipcRenderer.invoke('usb:get-known-devices')
+  },
+
   async getDeviceDescriptor(sysfsPath: string): Promise<USBDevice> {
     return ipcRenderer.invoke('usb:get-descriptor', sysfsPath)
   },

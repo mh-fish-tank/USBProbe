@@ -1,7 +1,7 @@
 import Database from 'better-sqlite3'
 import { app } from 'electron'
 import { join } from 'path'
-import type { USBEvent } from '../shared/types'
+import type { USBEvent, USBDevice, KnownDevice } from '../shared/types'
 
 let db: Database.Database | null = null
 
@@ -34,6 +34,16 @@ export function initDatabase(): void {
       key TEXT PRIMARY KEY,
       value TEXT NOT NULL
     );
+
+    CREATE TABLE IF NOT EXISTS known_devices (
+      vid_pid TEXT PRIMARY KEY,
+      sysfs_path TEXT NOT NULL,
+      device_snapshot TEXT NOT NULL,
+      first_seen TEXT NOT NULL,
+      last_seen TEXT NOT NULL
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_known_devices_last_seen ON known_devices(last_seen DESC);
   `)
 }
 
@@ -98,6 +108,40 @@ export function getAllEvents(): USBEvent[] {
   const stmt = db.prepare('SELECT * FROM events ORDER BY timestamp DESC')
   const rows = stmt.all() as any[]
   return rows.map(rowToEvent)
+}
+
+export function upsertKnownDevice(device: USBDevice): void {
+  if (!db) throw new Error('Database not initialized')
+  const vid = device.descriptor.idVendor.toString(16).padStart(4, '0')
+  const pid = device.descriptor.idProduct.toString(16).padStart(4, '0')
+  const vidPid = `${vid}:${pid}`
+  const now = new Date().toISOString()
+
+  const stmt = db.prepare(`
+    INSERT INTO known_devices (vid_pid, sysfs_path, device_snapshot, first_seen, last_seen)
+    VALUES (@vidPid, @sysfsPath, @snapshot, @now, @now)
+    ON CONFLICT(vid_pid) DO UPDATE SET
+      sysfs_path = @sysfsPath,
+      device_snapshot = @snapshot,
+      last_seen = @now
+  `)
+  stmt.run({
+    vidPid,
+    sysfsPath: device.sysfsPath,
+    snapshot: JSON.stringify(device),
+    now
+  })
+}
+
+export function getKnownDevices(): KnownDevice[] {
+  if (!db) throw new Error('Database not initialized')
+  const rows = db.prepare('SELECT * FROM known_devices ORDER BY last_seen DESC').all() as any[]
+  return rows.map((row) => ({
+    sysfsPath: row.sysfs_path,
+    device: JSON.parse(row.device_snapshot),
+    firstSeen: row.first_seen,
+    lastSeen: row.last_seen
+  }))
 }
 
 function rowToEvent(row: any): USBEvent {

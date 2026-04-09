@@ -1,19 +1,23 @@
 import { create } from 'zustand'
-import type { USBDevice, USBEvent } from '../../shared/types'
+import type { USBDevice, USBEvent, KnownDevice } from '../../shared/types'
 
 interface DeviceState {
   devices: USBDevice[]
   events: USBEvent[]
+  knownDevices: KnownDevice[]
   selectedDevicePath: string | null
   detailTab: 'overview' | 'descriptors' | 'hex'
+  treeMode: 'online' | 'history'
   eventStripExpanded: boolean
   settingsOpen: boolean
   // Actions
   setDevices: (devices: USBDevice[]) => void
   addEvent: (event: USBEvent) => void
   setEvents: (events: USBEvent[]) => void
+  setKnownDevices: (devices: KnownDevice[]) => void
   selectDevice: (sysfsPath: string | null) => void
   setDetailTab: (tab: 'overview' | 'descriptors' | 'hex') => void
+  setTreeMode: (mode: 'online' | 'history') => void
   toggleEventStrip: () => void
   setSettingsOpen: (open: boolean) => void
 }
@@ -23,8 +27,10 @@ const MAX_EVENTS = 1000
 export const useDeviceStore = create<DeviceState>((set) => ({
   devices: [],
   events: [],
+  knownDevices: [],
   selectedDevicePath: null,
   detailTab: 'overview',
+  treeMode: 'online',
   eventStripExpanded: false,
   settingsOpen: false,
 
@@ -37,9 +43,13 @@ export const useDeviceStore = create<DeviceState>((set) => ({
 
   setEvents: (events) => set({ events }),
 
+  setKnownDevices: (knownDevices) => set({ knownDevices }),
+
   selectDevice: (sysfsPath) => set({ selectedDevicePath: sysfsPath }),
 
   setDetailTab: (tab) => set({ detailTab: tab }),
+
+  setTreeMode: (mode) => set({ treeMode: mode, selectedDevicePath: null }),
 
   toggleEventStrip: () =>
     set((state) => ({ eventStripExpanded: !state.eventStripExpanded })),

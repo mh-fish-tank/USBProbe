@@ -114,9 +114,19 @@ export interface UdevRule {
   managedByUSBProbe: boolean
 }
 
+// ─── Known (History) Devices ────────────────────────────────────
+export interface KnownDevice {
+  sysfsPath: string
+  device: USBDevice
+  firstSeen: string
+  lastSeen: string
+}
+
 // ─── IPC Channel Types ──────────────────────────────────────────
 export interface USBProbeAPI {
   listDevices(): Promise<USBDevice[]>
+  refreshDevices(): Promise<void>
+  getKnownDevices(): Promise<KnownDevice[]>
   getDeviceDescriptor(sysfsPath: string): Promise<USBDevice>
   getRawDescriptor(sysfsPath: string): Promise<number[]>
   onDeviceEvent(callback: (event: USBEvent) => void): () => void

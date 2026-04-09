@@ -6,7 +6,9 @@ import {
   insertEvent,
   getEvents,
   getEventCount,
-  searchEvents
+  searchEvents,
+  upsertKnownDevice,
+  getKnownDevices
 } from './database'
 import { lookupVendorById, lookupProductById } from './usb-ids'
 import { exportJSON, exportCSV } from './export-service'
@@ -25,6 +27,10 @@ export function setupIPC(mainWindow: BrowserWindow): void {
   onWorkerMessage((msg) => {
     if (msg.type === 'device-list') {
       currentDevices = msg.devices as USBDevice[]
+      // Record all currently connected devices as known
+      for (const d of currentDevices) {
+        try { upsertKnownDevice(d) } catch { /* ignore */ }
+      }
       mainWindow.webContents.send('usb:device-list', currentDevices)
     } else if (msg.type === 'device-event') {
       const raw = msg.event
@@ -58,6 +64,9 @@ export function setupIPC(mainWindow: BrowserWindow): void {
       // Persist to DB
       try {
         insertEvent(event)
+        if (device && action === 'add') {
+          upsertKnownDevice(device)
+        }
       } catch (e) {
         console.error('Failed to insert event:', e)
       }
@@ -81,6 +90,14 @@ export function setupIPC(mainWindow: BrowserWindow): void {
   ipcMain.handle('usb:list-devices', async () => {
     sendToWorker({ type: 'list-devices' })
     return currentDevices
+  })
+
+  ipcMain.handle('usb:refresh-devices', async () => {
+    sendToWorker({ type: 'list-devices' })
+  })
+
+  ipcMain.handle('usb:get-known-devices', async () => {
+    return getKnownDevices()
   })
 
   ipcMain.handle('usb:get-descriptor', async (_event, sysfsPath: string) => {

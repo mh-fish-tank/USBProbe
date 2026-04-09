@@ -4,7 +4,12 @@
     "filter": "Filter devices…",
     "bus": "Bus {{bus}}",
     "hub": "Hub",
-    "noDevices": "No USB devices detected"
+    "noDevices": "No USB devices detected",
+    "historyTitle": "History",
+    "online": "Online",
+    "history": "History",
+    "refresh": "Refresh device list",
+    "noHistory": "No device history yet"
   },
   "detail": {
     "overview": "Overview",

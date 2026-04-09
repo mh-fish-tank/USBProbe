@@ -16,9 +16,11 @@ export interface TreeNodeData {
 interface TreeNodeProps {
   node: TreeNodeData
   depth?: number
+  isHistoryMode?: boolean
+  onlinePaths?: Set<string>
 }
 
-export function TreeNode({ node, depth = 0 }: TreeNodeProps): React.ReactElement {
+export function TreeNode({ node, depth = 0, isHistoryMode, onlinePaths }: TreeNodeProps): React.ReactElement {
   const [expanded, setExpanded] = useState(true)
   const selectedDevicePath = useDeviceStore((s) => s.selectedDevicePath)
   const selectDevice = useDeviceStore((s) => s.selectDevice)
@@ -73,12 +75,26 @@ export function TreeNode({ node, depth = 0 }: TreeNodeProps): React.ReactElement
         )}
 
         {/* Device icon */}
+        {isHistoryMode && node.sysfsPath && (
+          <span
+            style={{
+              width: 6,
+              height: 6,
+              borderRadius: '50%',
+              background: onlinePaths?.has(node.sysfsPath) ? 'var(--success)' : 'var(--text-muted)',
+              flexShrink: 0
+            }}
+          />
+        )}
         <Icon
           icon={node.icon ?? 'mdi:usb'}
           style={{
             fontSize: 15,
-            color: node.iconColor ?? 'var(--text-muted)',
-            flexShrink: 0
+            color: isHistoryMode && node.sysfsPath && !onlinePaths?.has(node.sysfsPath)
+              ? 'var(--text-muted)'
+              : (node.iconColor ?? 'var(--text-muted)'),
+            flexShrink: 0,
+            opacity: isHistoryMode && node.sysfsPath && !onlinePaths?.has(node.sysfsPath) ? 0.5 : 1
           }}
         />
 
@@ -120,7 +136,7 @@ export function TreeNode({ node, depth = 0 }: TreeNodeProps): React.ReactElement
       {hasChildren && expanded && (
         <div>
           {node.children!.map((child) => (
-            <TreeNode key={child.id} node={child} depth={depth + 1} />
+            <TreeNode key={child.id} node={child} depth={depth + 1} isHistoryMode={isHistoryMode} onlinePaths={onlinePaths} />
           ))}
         </div>
       )}

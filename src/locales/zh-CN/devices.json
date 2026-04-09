@@ -4,7 +4,12 @@
     "filter": "筛选设备…",
     "bus": "总线 {{bus}}",
     "hub": "集线器",
-    "noDevices": "未检测到 USB 设备"
+    "noDevices": "未检测到 USB 设备",
+    "historyTitle": "历史设备",
+    "online": "在线",
+    "history": "历史",
+    "refresh": "刷新设备列表",
+    "noHistory": "暂无历史设备记录"
   },
   "detail": {
     "overview": "概览",

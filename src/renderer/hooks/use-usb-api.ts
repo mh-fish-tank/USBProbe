@@ -26,6 +26,7 @@ import { useDeviceStore } from '../stores/device-store'
 export function useDeviceListSync(): void {
   const setDevices = useDeviceStore((s) => s.setDevices)
   const setEvents = useDeviceStore((s) => s.setEvents)
+  const setKnownDevices = useDeviceStore((s) => s.setKnownDevices)
   const addEvent = useDeviceStore((s) => s.addEvent)
 
   useEffect(() => {
@@ -37,13 +38,15 @@ export function useDeviceListSync(): void {
     // Initial load
     api.listDevices().then(setDevices).catch(console.error)
     api.getEvents(50).then(setEvents).catch(console.error)
+    api.getKnownDevices().then(setKnownDevices).catch(console.error)
 
-    // Subscribe to push updates: full device-list snapshots from the worker
+    // Subscribe to push updates
     const unsubDeviceList = window.usbProbeEvents.onDeviceList((devices) => {
       setDevices(devices)
+      // Refresh known devices when online list changes
+      api.getKnownDevices().then(setKnownDevices).catch(console.error)
     })
 
-    // Subscribe to individual device events (connect / disconnect)
     const unsubDeviceEvent = api.onDeviceEvent((event: USBEvent) => {
       addEvent(event)
     })
