@@ -1,1 +1,6 @@
 .superpowers/
+node_modules/
+out/
+dist/
+native/target/
+native/*.node

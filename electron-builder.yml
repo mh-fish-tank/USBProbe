@@ -1,0 +1,16 @@
+appId: com.usbprobe.app
+productName: USBProbe
+directories:
+  buildResources: build
+files:
+  - '!**/.vscode/*'
+  - '!src/*'
+  - '!electron.vite.config.*'
+  - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml}'
+  - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
+linux:
+  target:
+    - AppImage
+    - deb
+  category: Development
+  maintainer: mhpsy
