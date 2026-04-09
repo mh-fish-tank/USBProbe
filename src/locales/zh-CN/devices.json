@@ -1,0 +1,49 @@
+{
+  "tree": {
+    "title": "设备列表",
+    "filter": "筛选设备…",
+    "bus": "总线 {{bus}}",
+    "hub": "集线器",
+    "noDevices": "未检测到 USB 设备"
+  },
+  "detail": {
+    "overview": "概览",
+    "descriptors": "描述符",
+    "hexViewer": "十六进制查看器",
+    "noSelection": "选择设备以查看详情"
+  },
+  "overview": {
+    "identity": "身份信息",
+    "connection": "连接信息",
+    "deviceClass": "设备类别",
+    "interfaces": "接口",
+    "vid": "厂商 ID",
+    "pid": "产品 ID",
+    "serial": "序列号",
+    "busDev": "总线 / 设备",
+    "speed": "速度",
+    "usb": "USB 版本",
+    "port": "端口路径",
+    "power": "最大功耗",
+    "class": "类别",
+    "subclass": "子类别",
+    "protocol": "协议",
+    "configs": "配置数",
+    "connected": "已连接",
+    "manufacturer": "制造商"
+  },
+  "events": {
+    "title": "事件",
+    "connect": "已连接",
+    "disconnect": "已断开",
+    "noEvents": "暂无事件记录",
+    "search": "搜索事件…"
+  },
+  "speed": {
+    "low": "低速 (1.5 Mbps)",
+    "full": "全速 (12 Mbps)",
+    "high": "高速 (480 Mbps)",
+    "super": "超高速 (5 Gbps)",
+    "super_plus": "超高速+ (10 Gbps)"
+  }
+}

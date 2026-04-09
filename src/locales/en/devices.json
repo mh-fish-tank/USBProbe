@@ -1,0 +1,49 @@
+{
+  "tree": {
+    "title": "Devices",
+    "filter": "Filter devices…",
+    "bus": "Bus {{bus}}",
+    "hub": "Hub",
+    "noDevices": "No USB devices detected"
+  },
+  "detail": {
+    "overview": "Overview",
+    "descriptors": "Descriptors",
+    "hexViewer": "Hex Viewer",
+    "noSelection": "Select a device to view details"
+  },
+  "overview": {
+    "identity": "Identity",
+    "connection": "Connection",
+    "deviceClass": "Device Class",
+    "interfaces": "Interfaces",
+    "vid": "Vendor ID",
+    "pid": "Product ID",
+    "serial": "Serial Number",
+    "busDev": "Bus / Device",
+    "speed": "Speed",
+    "usb": "USB Version",
+    "port": "Port Path",
+    "power": "Max Power",
+    "class": "Class",
+    "subclass": "Subclass",
+    "protocol": "Protocol",
+    "configs": "Configurations",
+    "connected": "Connected",
+    "manufacturer": "Manufacturer"
+  },
+  "events": {
+    "title": "Events",
+    "connect": "Connected",
+    "disconnect": "Disconnected",
+    "noEvents": "No events recorded",
+    "search": "Search events…"
+  },
+  "speed": {
+    "low": "Low Speed (1.5 Mbps)",
+    "full": "Full Speed (12 Mbps)",
+    "high": "High Speed (480 Mbps)",
+    "super": "SuperSpeed (5 Gbps)",
+    "super_plus": "SuperSpeed+ (10 Gbps)"
+  }
+}

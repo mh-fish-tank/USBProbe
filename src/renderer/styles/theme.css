@@ -1,0 +1,135 @@
+/* ─── Catppuccin Mocha Palette ──────────────────────────────────── */
+:root {
+  /* Base palette — 26 colors */
+  --rosewater: #f5e0dc;
+  --flamingo: #f2cdcd;
+  --pink: #f5c2e7;
+  --mauve: #cba6f7;
+  --red: #f38ba8;
+  --maroon: #eba0ac;
+  --peach: #fab387;
+  --yellow: #f9e2af;
+  --green: #a6e3a1;
+  --teal: #94e2d5;
+  --sky: #89dceb;
+  --sapphire: #74c7ec;
+  --blue: #89b4fa;
+  --lavender: #b4befe;
+  --text: #cdd6f4;
+  --subtext1: #bac2de;
+  --subtext0: #a6adc8;
+  --overlay2: #9399b2;
+  --overlay1: #7f849c;
+  --overlay0: #6c7086;
+  --surface2: #585b70;
+  --surface1: #45475a;
+  --surface0: #313244;
+  --base: #1e1e2e;
+  --mantle: #181825;
+  --crust: #11111b;
+
+  /* ─── Semantic Tokens ─────────────────────────────────────────── */
+  --bg-primary: var(--base);
+  --bg-secondary: var(--surface0);
+  --bg-tertiary: var(--surface1);
+  --bg-hover: var(--surface2);
+  --bg-titlebar: var(--mantle);
+
+  /* Text */
+  --text-primary: var(--text);
+  --text-secondary: var(--subtext0);
+  --text-muted: var(--overlay0);
+
+  /* Status */
+  --accent: var(--blue);
+  --success: var(--green);
+  --warning: var(--yellow);
+  --error: var(--red);
+
+  /* Border & Radius */
+  --border: var(--surface0);
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+
+  /* ─── Hex Viewer Field Colors ─────────────────────────────────── */
+  --hex-field-0: var(--red);
+  --hex-field-1: var(--green);
+  --hex-field-2: var(--blue);
+  --hex-field-3: var(--yellow);
+  --hex-field-4: var(--mauve);
+  --hex-field-5: var(--peach);
+  --hex-field-6: var(--teal);
+  --hex-field-7: var(--pink);
+  --hex-field-8: var(--sky);
+  --hex-field-9: var(--lavender);
+}
+
+/* ─── Reset ───────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  overflow: hidden;
+  user-select: none;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Scrollbar ───────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--surface2);
+  border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--overlay0);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--bg-primary);
+}
+
+/* ─── Utility Classes ─────────────────────────────────────────────── */
+.mono {
+  font-family:
+    'JetBrains Mono',
+    'Fira Code',
+    'Cascadia Code',
+    'Source Code Pro',
+    'Consolas',
+    'Courier New',
+    monospace;
+  font-feature-settings: 'liga' 1, 'calt' 1;
+}
+
+.label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--text-muted);
+}

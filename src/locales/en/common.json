@@ -1,0 +1,42 @@
+{
+  "app": {
+    "title": "USBProbe",
+    "monitoring": "Monitoring",
+    "export": "Export",
+    "settings": "Settings"
+  },
+  "actions": {
+    "copy": "Copy",
+    "export": "Export",
+    "search": "Search",
+    "filter": "Filter",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "add": "Add",
+    "edit": "Edit",
+    "close": "Close",
+    "viewAll": "View All"
+  },
+  "export": {
+    "json": "Export JSON",
+    "csv": "Export CSV",
+    "success": "Export successful",
+    "failed": "Export failed"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "udevRules": "udev Rules"
+  },
+  "permission": {
+    "title": "Permission Required",
+    "description": "USBProbe needs elevated permissions to read USB device descriptors.",
+    "installRule": "Install udev Rule",
+    "installRuleDesc": "Install a udev rule to allow non-root access to USB devices (recommended).",
+    "elevate": "Run as Root",
+    "elevateDesc": "Launch USBProbe with elevated privileges using pkexec or sudo.",
+    "skip": "Skip",
+    "skipDesc": "Continue without full descriptor access. Some features may be unavailable."
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "app": {
+    "title": "USBProbe",
+    "monitoring": "监控中",
+    "export": "导出",
+    "settings": "设置"
+  },
+  "actions": {
+    "copy": "复制",
+    "export": "导出",
+    "search": "搜索",
+    "filter": "筛选",
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "add": "添加",
+    "edit": "编辑",
+    "close": "关闭",
+    "viewAll": "查看全部"
+  },
+  "export": {
+    "json": "导出 JSON",
+    "csv": "导出 CSV",
+    "success": "导出成功",
+    "failed": "导出失败"
+  },
+  "settings": {
+    "title": "设置",
+    "language": "语言",
+    "udevRules": "udev 规则"
+  },
+  "permission": {
+    "title": "需要权限",
+    "description": "USBProbe 需要提升权限以读取 USB 设备描述符。",
+    "installRule": "安装 udev 规则",
+    "installRuleDesc": "安装 udev 规则以允许非 root 用户访问 USB 设备（推荐）。",
+    "elevate": "以 Root 运行",
+    "elevateDesc": "使用 pkexec 或 sudo 以提升权限启动 USBProbe。",
+    "skip": "跳过",
+    "skipDesc": "在没有完整描述符访问权限的情况下继续。部分功能可能不可用。"
+  }
+}
