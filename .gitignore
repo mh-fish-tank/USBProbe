@@ -4,3 +4,5 @@ out/
 dist/
 native/target/
 native/*.node
+package-lock.json
+native/package-lock.json
