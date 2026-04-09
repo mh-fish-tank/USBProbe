@@ -18,7 +18,7 @@ function createWindow(): void {
     frame: false,
     titleBarStyle: 'hidden',
     webPreferences: {
-      preload: join(__dirname, '../preload/index.mjs'),
+      preload: join(__dirname, '../preload/index.js'),
       sandbox: false
     }
   })
