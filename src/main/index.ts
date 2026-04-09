@@ -1,5 +1,9 @@
 import { app, BrowserWindow, shell } from 'electron'
 import { join } from 'path'
+import { initDatabase, closeDatabase } from './database'
+import { setupIPC } from './ipc'
+import { startWorker, stopWorker } from './worker-manager'
+import { loadUsbIds } from './usb-ids'
 
 const isDev = process.env['NODE_ENV'] === 'development'
 
@@ -32,9 +36,17 @@ function createWindow(): void {
 }
 
 app.whenReady().then(() => {
+  initDatabase()
+  loadUsbIds()
   createWindow()
+  if (mainWindow) {
+    setupIPC(mainWindow)
+  }
+  startWorker()
 })
 
 app.on('window-all-closed', () => {
+  stopWorker()
+  closeDatabase()
   app.quit()
 })
