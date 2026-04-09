@@ -70,7 +70,8 @@ export function DeviceTreePanel(): React.ReactElement {
         borderRight: '1px solid var(--border)',
         display: 'flex',
         flexDirection: 'column',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        minHeight: 0
       }}
     >
       {/* Header */}

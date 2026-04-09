@@ -134,6 +134,7 @@ const styles = {
     display: 'flex',
     flex: 1,
     overflow: 'hidden',
+    minHeight: 0,
   },
   hexPane: {
     flex: 1,

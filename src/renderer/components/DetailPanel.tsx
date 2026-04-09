@@ -61,6 +61,7 @@ export function DetailPanel(): React.ReactElement {
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
+        minHeight: 0,
         background: 'var(--bg-primary)'
       }}
     >
@@ -114,7 +115,7 @@ export function DetailPanel(): React.ReactElement {
           </div>
 
           {/* Tab content */}
-          <div style={{ flex: 1, overflow: 'auto', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ flex: 1, overflow: 'auto', display: 'flex', flexDirection: 'column', minHeight: 0 }}>
             {detailTab === 'overview' && <OverviewTab device={device} />}
             {detailTab === 'descriptors' && <DescriptorsTab device={device} />}
             {detailTab === 'hex' && <HexViewerTab device={device} />}

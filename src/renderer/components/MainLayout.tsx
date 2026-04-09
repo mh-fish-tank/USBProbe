@@ -4,7 +4,7 @@ import { DetailPanel } from './DetailPanel'
 
 export function MainLayout(): React.ReactElement {
   return (
-    <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
+    <div style={{ flex: 1, display: 'flex', overflow: 'hidden', minHeight: 0 }}>
       <DeviceTreePanel />
       <DetailPanel />
     </div>
