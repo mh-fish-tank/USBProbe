@@ -310,8 +310,14 @@ if (!nativeBinding) {
   throw new Error(`Failed to load native binding`)
 }
 
-const { listDevices, getDeviceDescriptor, getRawDescriptor } = nativeBinding
+const { parseDescriptor, MonitorHandle, startMonitor, parseUsbIds, lookupVendor, lookupProduct, listDevices, getDeviceDescriptor, getRawDescriptor } = nativeBinding
 
+module.exports.parseDescriptor = parseDescriptor
+module.exports.MonitorHandle = MonitorHandle
+module.exports.startMonitor = startMonitor
+module.exports.parseUsbIds = parseUsbIds
+module.exports.lookupVendor = lookupVendor
+module.exports.lookupProduct = lookupProduct
 module.exports.listDevices = listDevices
 module.exports.getDeviceDescriptor = getDeviceDescriptor
 module.exports.getRawDescriptor = getRawDescriptor

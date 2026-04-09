@@ -58,6 +58,54 @@ export interface NativeUsbDevice {
   configurations: Array<NativeConfiguration>
   rawDescriptors: Array<number>
 }
+export interface DescriptorField {
+  name: string
+  offset: number
+  size: number
+  rawBytes: Array<number>
+  value: number
+  description: string
+}
+export interface ParsedDescriptor {
+  descriptorType: string
+  fields: Array<DescriptorField>
+  rawBytes: Array<number>
+  totalLength: number
+}
+export declare function parseDescriptor(rawBytes: Array<number>, descriptorType: string): ParsedDescriptor
+export interface MonitorEvent {
+  /** "add" or "remove" */
+  action: string
+  /** The sysfs path of the device */
+  sysfsPath: string
+  /** Device details (populated on "add", may be None on "remove") */
+  device?: NativeUsbDevice
+}
+export declare function startMonitor(callback: (err: Error | null, arg: MonitorEvent) => any): MonitorHandle
+export interface ProductEntry {
+  id: number
+  name: string
+}
+export interface VendorEntry {
+  id: number
+  name: string
+  products: Array<ProductEntry>
+}
+/**
+ * Parse the system usb.ids database.
+ *
+ * If `file_path` is provided, that path is used directly. Otherwise the
+ * function tries a list of well-known locations.
+ */
+export declare function parseUsbIds(filePath?: string | undefined | null): Array<VendorEntry>
+/** Look up a vendor by VID in a pre-parsed list. */
+export declare function lookupVendor(vendors: Array<VendorEntry>, vid: number): VendorEntry | null
+/** Look up a product by VID+PID in a pre-parsed list. */
+export declare function lookupProduct(vendors: Array<VendorEntry>, vid: number, pid: number): ProductEntry | null
 export declare function listDevices(): Array<NativeUsbDevice>
 export declare function getDeviceDescriptor(sysfsPath: string): NativeUsbDevice
 export declare function getRawDescriptor(sysfsPath: string): Array<number>
+export declare class MonitorHandle {
+  /** Stop the monitor thread. */
+  stop(): void
+}
