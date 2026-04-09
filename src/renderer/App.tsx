@@ -1,8 +1,17 @@
+import React from 'react'
+import { TitleBar } from './components/TitleBar'
+import { MainLayout } from './components/MainLayout'
+import { EventStrip } from './components/EventStrip'
+import { useDeviceListSync } from './hooks/use-usb-api'
+import './styles/theme.css'
+
 function App(): React.ReactElement {
+  useDeviceListSync()
   return (
-    <div style={{ background: '#1e1e2e', color: '#cdd6f4', height: '100vh' }}>
-      <h1>USBProbe</h1>
-      <p>Loading...</p>
+    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <TitleBar />
+      <MainLayout />
+      <EventStrip />
     </div>
   )
 }
