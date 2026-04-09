@@ -1,5 +1,7 @@
 import { parentPort } from 'worker_threads'
 import type { MainToWorkerMessage, WorkerMessage } from '../shared/types'
+import { mapNativeDevice } from './map-device'
+import type { NativeDevice } from './map-device'
 
 // Load native addon - find the .node file
 const path = require('path')
@@ -15,7 +17,8 @@ function handleMessage(msg: MainToWorkerMessage): void {
   switch (msg.type) {
     case 'list-devices': {
       try {
-        const devices = native.listDevices()
+        const rawDevices: NativeDevice[] = native.listDevices()
+        const devices = rawDevices.map(mapNativeDevice)
         postMessage({ type: 'device-list', devices })
       } catch (e) {
         postMessage({ type: 'error', message: `Failed to list devices: ${e}` })
@@ -26,12 +29,13 @@ function handleMessage(msg: MainToWorkerMessage): void {
       if (monitorHandle) return
       try {
         monitorHandle = native.startMonitor((_err: Error | null, event: any) => {
+          const device = event.device ? mapNativeDevice(event.device as NativeDevice) : null
           postMessage({
             type: 'device-event',
             event: {
               action: event.action as 'add' | 'remove',
               sysfsPath: event.sysfsPath,
-              device: event.device ?? null
+              device
             }
           })
         })
@@ -49,7 +53,8 @@ function handleMessage(msg: MainToWorkerMessage): void {
     }
     case 'get-descriptor': {
       try {
-        const device = native.getDeviceDescriptor(msg.sysfsPath)
+        const rawDevice: NativeDevice = native.getDeviceDescriptor(msg.sysfsPath)
+        const device = mapNativeDevice(rawDevice)
         postMessage({ type: 'device-list', devices: [device] })
       } catch (e) {
         postMessage({ type: 'error', message: `Failed to get descriptor: ${e}` })
